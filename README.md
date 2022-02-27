@@ -1,4 +1,4 @@
-# react-projects-7-slider
+# Few small React Projects
 
 #### Check Sites
 ##### Branches :
