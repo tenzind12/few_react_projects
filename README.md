@@ -1,7 +1,8 @@
-# Few small React Projects
+# Few small React Projects - Each branch is its own small separate project
 
 #### Check Sites
 ##### Branches :
+
 
 [Gatsby-Airtable Project](https://gatsby-airtable-design-project.netlify.app/)
 
