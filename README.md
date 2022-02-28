@@ -8,4 +8,4 @@
 
 [Lorem Ipsum Generator](https://generate-lorem.tenzin.eu/)
 
-[Tours-tourism] (https://tenzind12.github.io/Tours-react/)
+[Tours-tourism](https://tenzind12.github.io/Tours-react/)
