@@ -1,49 +1,63 @@
-import './App.css';
-import '@fortawesome/fontawesome-free/css/all.css'
-import Header from './components/Header';
-import Form from './components/Form';
-import List from './components/List';
-import Footer from './components/Footer';
-import { useEffect, useState } from 'react';
+import "./App.css";
+import "@fortawesome/fontawesome-free/css/all.css";
+import Header from "./components/Header";
+import Form from "./components/Form";
+import List from "./components/List";
+import Footer from "./components/Footer";
+import { useEffect, useState } from "react";
+
+const getLocalStorage = () => {
+  let list = localStorage.getItem("list");
+  if (list) return JSON.parse(localStorage.getItem("list"));
+  else return [];
+};
 
 function App() {
-
-  const [todos, setTodos] = useState(JSON.parse(localStorage.getItem('list')));
-  const [done, setDone] = useState(false);
+  const [todos, setTodos] = useState(getLocalStorage);
 
   // form function
-  const addTodo =  (todo) => {
+  const addTodo = (todo) => {
     const currentTodos = [...todos];
-    currentTodos.push({ done: done, description: todo});
+    currentTodos.push({ done: false, description: todo });
     setTodos(currentTodos);
-  }
+  };
 
   // delete item
   const deleteList = (index) => {
-    todos.splice(index, 1);
-    setTodos(todos)
-  }
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
+  };
+
+  // check uncheck
+  const checkUncheck = (index) => {
+    const updatedTodos = todos.map((todo, i) => {
+      if (i === index) {
+        todo.done = !todo.done;
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+  };
 
   // storing in localStorage
-  useEffect(()=> {
-    localStorage.setItem('list', JSON.stringify(todos));
-  }, [todos])
-  
-  // cocher/décocher les tâches
-  // const check = (id) => {
-  //   const test = todos.filter(item => item.id === id);
-  //   if(test) console.log(test)
-  // }
+  useEffect(() => {
+    localStorage.setItem("list", JSON.stringify(todos));
+  }, [todos]);
+
+  // number of task done
+  const isDone = () => {
+    return todos.filter((todo) => todo.done === true).length;
+  };
+
   return (
     <>
-     <Header/>
-
+      <Header isDone={isDone} totalTask={todos.length} />
       <main>
-         <Form addTodo={addTodo}/>
-         <List todos ={todos} deleteList={deleteList} />
+        <Form addTodo={addTodo} />
+        <List todos={todos} deleteList={deleteList} checkUncheck={checkUncheck} />
       </main>
-      
-      <Footer/>
+      <Footer />
     </>
   );
 }
