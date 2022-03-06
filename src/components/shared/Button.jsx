@@ -13,7 +13,7 @@ Button.defaultProps = {
   isDisabled: false,
 };
 
-Button.prototype = {
+Button.propTypes = {
   children: PropTypes.node.isRequired,
   version: PropTypes.string,
   type: PropTypes.string,
