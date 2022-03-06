@@ -1,8 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import FeedbackContext from '../context/FeedbackContext';
 
 function RatingSelect({ select }) {
-  const [selected, setSelected] = useState(7);
+  const [selected, setSelected] = useState(10);
+  const { feedbackEdit } = useContext(FeedbackContext);
 
+  useEffect(() => {
+    setSelected(feedbackEdit.item.rating || 10);
+  }, [feedbackEdit]);
+
+  // passing the ratings value to select prop function from FeedbackForm
   const handleChange = (e) => {
     setSelected(+e.target.value);
     select(+e.target.value);
@@ -97,6 +105,28 @@ function RatingSelect({ select }) {
           onChange={handleChange}
         />
         <label htmlFor="num8">8</label>
+      </li>
+      <li>
+        <input
+          type="radio"
+          name="rating"
+          id="num9"
+          value="9"
+          checked={selected === 9}
+          onChange={handleChange}
+        />
+        <label htmlFor="num9">9</label>
+      </li>
+      <li>
+        <input
+          type="radio"
+          name="rating"
+          id="num10"
+          value="10"
+          checked={selected === 10}
+          onChange={handleChange}
+        />
+        <label htmlFor="num10">10</label>
       </li>
     </ul>
   );
