@@ -8,7 +8,7 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #202142;
+  background-color: #222224;
   color: #fff;
   line-height: 1.6;
 }
@@ -87,7 +87,7 @@ header {
 
 .rating li:hover,
 .num-display {
-  background: #ff6a95;
+  background: #35cf9c;
   color: #fff;
 }
 
@@ -96,7 +96,7 @@ header {
 }
 
 [type='radio']:checked ~ label {
-  background: #ff6a95;
+  background: #35cf9c;
   color: #fff;
 }
 
@@ -156,11 +156,11 @@ input:focus {
 }
 
 .btn-primary {
-  background-color: #202142;
+  background-color: #28282b;
 }
 
 .btn-secondary {
-  background: #ff6a95;
+  background: #35cf9c;
 }
 
 .btn:hover {
@@ -182,7 +182,7 @@ input:focus {
 .message {
   padding-top: 10px;
   text-align: center;
-  color: rebeccapurple;
+  color: rgb(218, 49, 119);
 }
 
 /* FIX: Remove position: absolute to keep about icon at the bottom of the
@@ -200,7 +200,7 @@ input:focus {
 }
 
 .about-link a:hover {
-  color: #ff6a95;
+  color: #35cf9c;
 }
 
 .about h1 {

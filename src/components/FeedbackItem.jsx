@@ -12,10 +12,10 @@ function FeedbackItem({ item }) {
       <div className="num-display">{item.rating}</div>
       {/* passing item.id upward to FeedbackList(parent) */}
       <button onClick={() => deleteFeedback(item.id)} className="close">
-        <FaTimes color="purple" />
+        <FaTimes color="brown" />
       </button>
       <button onClick={() => editFeedback(item)} className="edit">
-        <FaEdit color="purple" />
+        <FaEdit color="seagreen" />
       </button>
       <div className="text-display">{item.text}</div>
     </Card>
