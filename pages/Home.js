@@ -42,7 +42,6 @@ export default Home = ({navigation}) => {
       )} keyExtractor={(item)=>item.id}>
       </FlatList>
     </View>
-    
   )
 }
 

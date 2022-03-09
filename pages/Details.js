@@ -6,7 +6,7 @@ import * as Location from 'expo-location';
 export default Details = ({ navigation, route }) => {
   // console.log(route.params.slug);
 
-  const apiKey = '6de6d7fbdff24d28a1ae799c4252b305';
+  const apiKey = "6de6d7fbdff24d28a1ae799c4252b305";
   const url = `https://api.rawg.io/api/games/${route.params.slug}?key=${apiKey}`;
 
   const fetchDetails = async () => {
@@ -14,27 +14,28 @@ export default Details = ({ navigation, route }) => {
     const data = await response.json();
     setDetails(data);
     store(data)
+    console.log(apiKey)
   };
 
   // =====================TEST=================================//
-const [location, setLocation] = useState(null);
-const [error, setError] = useState(null);
+// const [location, setLocation] = useState(null);
+// const [error, setError] = useState(null);
 
-useEffect(() => {
-  (async () => {
-    let {status} = await Location.requestForegroundPermissionsAsync();
-    if(status !== 'granted') {
-      setError('Permission denied !')
-      return
-    }
-    let location = await Location.getCurrentPositionAsync({});
-    setLocation(location);
-  })();
-}, [])
+// useEffect(() => {
+//   (async () => {
+//     let {status} = await Location.requestForegroundPermissionsAsync();
+//     if(status !== 'granted') {
+//       setError('Permission denied !')
+//       return
+//     }
+//     let location = await Location.getCurrentPositionAsync({});
+//     setLocation(location);
+//   })();
+// }, [])
 
-let text = 'waiting...';
-if(error) text = error;
-else if (location) text = JSON.stringify(location);
+// let text = 'waiting...';
+// if(error) text = error;
+// else if (location) text = JSON.stringify(location);
 
 
 //   const [test, setTest] = useState({});
@@ -89,7 +90,6 @@ else if (location) text = JSON.stringify(location);
             <View>
               <Text style={styles.gameName}>{details.name}</Text>
               <Text >{details.description}</Text>
-              <Text>{text}</Text>
             </View>
           
           </View>
