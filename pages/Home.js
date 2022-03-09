@@ -11,7 +11,7 @@ export default Home = ({navigation}) => {
       fetch(url)
       .then(response => response.json())
       .then(data => {setGames(data.results)})
-      .catch(() => alert('Une erreur est survenue'))
+      .catch((msg) => alert(msg.message))
     }
 
     const handleClick = slug => {
@@ -42,6 +42,7 @@ export default Home = ({navigation}) => {
       )} keyExtractor={(item)=>item.id}>
       </FlatList>
     </View>
+    
   )
 }
 

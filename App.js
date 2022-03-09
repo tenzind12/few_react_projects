@@ -1,8 +1,9 @@
 import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet} from 'react-native';
 import Home from './pages/Home';
+import Details from './pages/Details';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,3 +25,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+                              
