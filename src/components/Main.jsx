@@ -22,7 +22,7 @@ const highscores = JSON.parse(json_highscores) || [];
 const Main = () => {
     const [input, setInput] =  useState('');
     const [score, setScore] = useState(0);
-    const [time, setTime] = useState(5)
+    const [time, setTime] = useState(30)
     const [userscores, setUserscores] = useState(highscores)
 
     const changeHandler = (e) => {
