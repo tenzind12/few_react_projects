@@ -1,4 +1,4 @@
-# Few small React-Js and React-Native Projects 
+# Few small-scaled React-Js and React-Native Projects 
 Each branch is its own small separate project
 
 ## Check Sites <img src="https://www.northfultoneyecenter.com/wp-content/uploads/2019/07/Moving-eye-icon3.gif" alt="eye icon" width="50" style="background:white"/>
