@@ -8,6 +8,6 @@
 
 ## OR
 
-[Download the apk file here](https://drive.google.com/file/d/1kwjYNWGOhnoLOrk6IakzJbogh0PxWlVj/view?usp=sharing)
+[Download the apk file here](https://drive.google.com/file/d/1jIVyAnPWYRtgyBqVKS1jT84s2RvpLLU5/view?usp=sharing)
 
 ![screenshot](https://github.com/tenzind12/few_react_projects/blob/productScanner/assets/Screenshot_2022-03-29-13-21-41-56_8038de857ce4810da26282a7cda54faf.jpg?raw=true)
