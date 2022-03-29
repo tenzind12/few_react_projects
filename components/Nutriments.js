@@ -6,7 +6,7 @@ export default function Nutriments({ nutriments }) {
       <View style={styles.nutriment}>
         <Text>Carbohydrates</Text>
         <Text>
-          {nutriments.carbohydrates_100g.toFixed(2)}
+          {nutriments.carbohydrates_100g ? nutriments.carbohydrates_100g.toFixed(2) : '0.00'}
           <Text style={styles.spanText}>/100g</Text>
         </Text>
       </View>
@@ -14,7 +14,7 @@ export default function Nutriments({ nutriments }) {
       <View style={styles.nutriment}>
         <Text>Proteins</Text>
         <Text>
-          {nutriments.proteins_100g.toFixed(2)}
+          {nutriments.proteins_100g ? nutriments.proteins_100g.toFixed(2) : '0.00'}
           <Text style={styles.spanText}>/100g</Text>
         </Text>
       </View>
@@ -22,7 +22,7 @@ export default function Nutriments({ nutriments }) {
       <View style={styles.nutriment}>
         <Text>Fats</Text>
         <Text>
-          {nutriments.fat_100g.toFixed(2)}
+          {nutriments.fat_100g ? nutriments.fat_100g.toFixed(2) : '0.00'}
           <Text style={styles.spanText}>/100g</Text>
         </Text>
       </View>
@@ -30,7 +30,7 @@ export default function Nutriments({ nutriments }) {
       <View style={styles.nutriment}>
         <Text>Fiber</Text>
         <Text>
-          {nutriments.fiber_100g.toFixed(2)}
+          {nutriments.fiber_100g ? nutriments.fiber_100g.toFixed(2) : '0.00'}
           <Text style={styles.spanText}>/100g</Text>
         </Text>
       </View>
@@ -38,7 +38,7 @@ export default function Nutriments({ nutriments }) {
       <View style={styles.nutriment}>
         <Text>Salt</Text>
         <Text>
-          {nutriments.salt_100g.toFixed(2)}
+          {nutriments.salt_100g ? nutriments.salt_100g.toFixed(2) : '0.00'}
           <Text style={styles.spanText}>/100g</Text>
         </Text>
       </View>
@@ -46,7 +46,7 @@ export default function Nutriments({ nutriments }) {
       <View style={styles.nutriment}>
         <Text>Sugar</Text>
         <Text>
-          {nutriments.sugars_100g.toFixed(2)}
+          {nutriments.sugars_100g ? nutriments.sugars_100g.toFixed(2) : '0.00'}
           <Text style={styles.spanText}>/100g</Text>
         </Text>
       </View>

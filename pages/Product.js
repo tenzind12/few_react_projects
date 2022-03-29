@@ -1,27 +1,99 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, Button, StyleSheet, TouchableOpacity, Vibration } from 'react-native';
+import { useState, useEffect } from 'react';
 import Nutriments from '../components/Nutriments';
 import Nutriscore from '../components/Nutriscore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import SavedProducts from './SavedProducts';
 
 export default function Product({ products }) {
-  // const { product_name, nutriments, image_front_small_url, nutriscore_grade } = products.product;
-  return (
-    products !== null && (
-      <View style={styles.container}>
-        <Text style={styles.name}>{products.product.product_name}</Text>
-        <Image source={{ uri: products.product.image_front_small_url }} style={styles.image} />
+  const [currentProducts, setCurrentProducts] = useState([]);
+  const [pageChange, setPageChange] = useState(true);
 
-        {/* nutriscore */}
-        {products.product.nutriscore_grade === undefined ? (
-          <Text style={styles.noScoreMessage}>This item doesn't have a nutriscore value</Text>
-        ) : (
-          <Nutriscore nutriscore_grade={products.product.nutriscore_grade} />
-        )}
+  // add button handler
+  const saveItemHandler = () => {
+    const newCurrentProducts = [
+      ...currentProducts,
+      {
+        id: Date.now(),
+        name: products.product.product_name,
+        image: products.product.image_front_small_url,
+        rating: products.product.nutriscore_grade,
+      },
+    ];
+    // currentProducts.push();
+    setCurrentProducts(newCurrentProducts);
+    Vibration.vibrate(100);
+  };
 
-        {/* nutrition scores component*/}
-        <Nutriments nutriments={products.product.nutriments} />
-      </View>
-    )
-  );
+  const deleteHandler = (id) => {
+    return () => {
+      const newCurrentProducts = currentProducts.filter((item) => item.id !== id);
+      setCurrentProducts(newCurrentProducts);
+    };
+  };
+
+  // getting localstorage
+  useEffect(() => {
+    getLocalStorage();
+  }, []);
+
+  const getLocalStorage = () => {
+    AsyncStorage.getItem('items')
+      .then((response) => JSON.parse(response || '[]'))
+      .then((data) => setCurrentProducts(data));
+  };
+
+  // localstorage saving
+  const saveLocalStorage = () => {
+    AsyncStorage.setItem('items', JSON.stringify(currentProducts));
+  };
+
+  useEffect(() => {
+    saveLocalStorage();
+  }, [currentProducts]);
+
+  if (pageChange) {
+    return (
+      products !== null && (
+        <View style={styles.container}>
+          <Text style={styles.name}>{products.product.product_name}</Text>
+          <Image source={{ uri: products.product.image_front_small_url }} style={styles.image} />
+
+          {/* nutriscore = undefined ? errorMessage : afficher le score */}
+          {products.product.nutriscore_grade === undefined ? (
+            <Text style={styles.noScoreMessage}>This item doesn't have a nutriscore value</Text>
+          ) : (
+            <Nutriscore nutriscore_grade={products.product.nutriscore_grade} />
+          )}
+
+          {/* nutrition scores component*/}
+          <Nutriments nutriments={products.product.nutriments} />
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.listBtn}
+              onPress={() => {
+                setPageChange(false);
+                Vibration.vibrate(50);
+              }}
+            >
+              <Text>Your Items</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.saveBtn} onPress={saveItemHandler}>
+              <Text>Save item</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )
+    );
+  } else {
+    return (
+      <SavedProducts
+        setPageChange={setPageChange}
+        storedItems={currentProducts}
+        deleteHandler={deleteHandler}
+      />
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -46,5 +118,23 @@ const styles = StyleSheet.create({
     marginTop: 10,
     padding: 5,
     borderRadius: 7,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+  listBtn: {
+    borderColor: 'skyblue',
+    borderWidth: 1,
+    padding: 5,
+    borderRadius: 7,
+    marginRight: 10,
+  },
+  saveBtn: {
+    borderColor: 'green',
+    borderWidth: 1,
+    padding: 5,
+    borderRadius: 7,
+    marginLeft: 10,
   },
 });

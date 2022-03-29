@@ -1,13 +1,18 @@
 import { StyleSheet, Text, View, Button, Vibration } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Product from './pages/Product';
+import { ProductContext } from './services/Context';
 
 export default function App() {
   const [hasPermission, setHasPermissioin] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [products, setProducts] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+
+  const [swapPage, setSwapPage] = useState(false);
+  // context API
+  const productContext = useContext(ProductContext);
 
   useEffect(() => {
     (async () => {
@@ -22,11 +27,9 @@ export default function App() {
     const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${data}.json`);
     const responseBody = await response.json();
     responseBody.status === 0
-      ? setErrorMessage("We don't rate this type of products")
+      ? setErrorMessage("We don't rate this type of product")
       : setProducts(responseBody);
   };
-
-  if (products) console.log(products.status);
 
   if (hasPermission === null) return <Text>Requesting for camera permission</Text>;
   if (hasPermission === false) return <Text>No permission</Text>;
@@ -44,10 +47,11 @@ export default function App() {
       {errorMessage && <Text style={styles.noProduct}>{errorMessage}</Text>}
 
       {scanned && !errorMessage && (
-        <>
+        <ProductContext.Provider value={{ swapPage, setSwapPage }}>
           <Product products={products} />
-        </>
+        </ProductContext.Provider>
       )}
+
       <View style={styles.button}>
         <Button
           title={'Tap to Scan Again'}
