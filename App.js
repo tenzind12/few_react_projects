@@ -1,11 +1,63 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button, Vibration } from 'react-native';
+import { BarCodeScanner } from 'expo-barcode-scanner';
+import React, { useState, useEffect } from 'react';
+import Product from './pages/Product';
 
 export default function App() {
+  const [hasPermission, setHasPermissioin] = useState(null);
+  const [scanned, setScanned] = useState(false);
+  const [products, setProducts] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermissioin(status === 'granted');
+    })();
+  }, []);
+
+  const handleBarCodeScanned = async ({ type, data }) => {
+    setScanned(true);
+    // console.log(`https://world.openfoodfacts.org/api/v0/product/${data}.json`);
+    const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${data}.json`);
+    const responseBody = await response.json();
+    responseBody.status === 0
+      ? setErrorMessage("We don't rate this type of products")
+      : setProducts(responseBody);
+  };
+
+  if (products) console.log(products.status);
+
+  if (hasPermission === null) return <Text>Requesting for camera permission</Text>;
+  if (hasPermission === false) return <Text>No permission</Text>;
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      {scanned || (
+        <BarCodeScanner
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          style={(StyleSheet.absoluteFillObject, styles.camera)}
+        />
+      )}
+
+      {/* if the product is not found */}
+      {errorMessage && <Text style={styles.noProduct}>{errorMessage}</Text>}
+
+      {scanned && !errorMessage && (
+        <>
+          <Product products={products} />
+        </>
+      )}
+      <View style={styles.button}>
+        <Button
+          title={'Tap to Scan Again'}
+          onPress={() => {
+            setScanned(false);
+            setErrorMessage(null);
+            Vibration.vibrate(50);
+          }}
+        />
+      </View>
     </View>
   );
 }
@@ -15,6 +67,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+  },
+
+  button: {
+    marginTop: 50,
+  },
+
+  noProduct: {
+    backgroundColor: 'teal',
+    color: 'white',
+    padding: 5,
+    borderRadius: 7,
+    marginTop: 100,
+  },
+  camera: {
+    height: 500,
+    width: 500,
+    marginTop: 80,
   },
 });

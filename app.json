@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.tenzin12.scanproducts"
     },
     "web": {
       "favicon": "./assets/favicon.png"
