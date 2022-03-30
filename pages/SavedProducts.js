@@ -1,16 +1,31 @@
-import { View, Text, Button, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  Vibration,
+  StyleSheet,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import { rating } from '../services/Service';
 
 export default function SavedProducts({ setPageChange, storedItems, deleteHandler }) {
+  // back to product page
+  const backBtnHandler = () => {
+    setPageChange(true);
+    Vibration.vibrate(100);
+  };
+
   return (
     <View style={styles.container}>
-      <Button title="Back" onPress={() => setPageChange(true)} />
+      <Button title="Back" onPress={backBtnHandler} />
       <Text style={styles.title}>Saved Products</Text>
       <FlatList
         data={storedItems}
         renderItem={({ item, index }) => (
           <View style={styles.itemContainer}>
-            <Text>{item.name}</Text>
+            <Text style={styles.itemName}>{item.name}</Text>
             {item.image !== undefined && (
               <Image source={{ uri: item.image }} style={styles.image} />
             )}
@@ -29,7 +44,7 @@ export default function SavedProducts({ setPageChange, storedItems, deleteHandle
                 <Text>{rating(item.rating)}</Text>
               )}
               <TouchableOpacity onPress={deleteHandler(item.id)} style={styles.deleteBtn}>
-                <Text>Delete</Text>
+                <Text style={styles.deleteText}>Delete</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -48,6 +63,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: 'bold',
+    textAlign: 'center',
+    // shadow box
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    padding: 10,
     marginBottom: 20,
   },
   itemContainer: {
@@ -56,6 +82,12 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 7,
+  },
+  itemName: {
+    fontSize: 20,
+    fontWeight: '100',
+    color: 'teal',
+    marginBottom: 10,
   },
   image: {
     height: 200,
@@ -72,5 +104,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 3,
     borderRadius: 7,
+  },
+  deleteText: {
+    color: 'grey',
   },
 });

@@ -1,5 +1,6 @@
-import { View, Text, Image, Button, StyleSheet, TouchableOpacity, Vibration } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Vibration } from 'react-native';
 import { useState, useEffect } from 'react';
+// import { saveAlert } from '../services/Service';
 import Nutriments from '../components/Nutriments';
 import Nutriscore from '../components/Nutriscore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,7 +10,7 @@ export default function Product({ products }) {
   const [currentProducts, setCurrentProducts] = useState([]);
   const [pageChange, setPageChange] = useState(true);
 
-  // add button handler
+  // A D D   B U T T O N   H A N D L E R
   const saveItemHandler = () => {
     const newCurrentProducts = [
       ...currentProducts,
@@ -20,11 +21,12 @@ export default function Product({ products }) {
         rating: products.product.nutriscore_grade,
       },
     ];
-    // currentProducts.push();
     setCurrentProducts(newCurrentProducts);
     Vibration.vibrate(100);
+    alert('Item has been saved to your list');
   };
 
+  // D E L E T E   B U T T O N   H A N D L E R
   const deleteHandler = (id) => {
     return () => {
       const newCurrentProducts = currentProducts.filter((item) => item.id !== id);
